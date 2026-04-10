@@ -17,6 +17,10 @@ src/db
 scripts
 .env.*
 !.env.*example
+.env
+*.env
+src/api/.env
+src/api/.env.aws.
 *.pkl
 secrets.toml
 secrets.*.toml
