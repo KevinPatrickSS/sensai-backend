@@ -799,3 +799,12 @@ class UpdateIntegrationRequest(BaseModel):
     access_token: str | None = None
     refresh_token: str | None = None
     expires_at: datetime | None = None
+
+
+class CodeEvaluateRequest(BaseModel):
+    user_code: str                        # The code the learner submitted
+    reference_solution: str               # The instructor's correct solution
+    problem_statement: str                # Full problem description shown to the learner
+    language: str                         # e.g. "python", "javascript"
+    user_id: Optional[int] = None         # For personalisation (fetch first name)
+    stdin: Optional[str] = None           # Sample input used during testing

@@ -1,0 +1,1885 @@
+[
+  {
+    "language": "python",
+    "source": "PEP8",
+    "rule": "Introduction",
+    "description": "This document gives coding conventions for the Python code comprising\nthe standard library in the main Python distribution.  Please see the\ncompanion informational PEP describingstyle guidelines for the C code\nin the C implementation of Python. This document andPEP 257(Docstring Conventions) were adapted from\nGuido\u2019s original Python Style Guide essay, with some additions from\nBarry\u2019s style guide[2]. This style guide evolves over time as additional conventions are\nidentified and past conventions are rendered obsolete by changes in\nthe language itself. Many projects have their own coding style guidelines. In the event of any\nconflicts, such project-specific guides take precedence for that proj",
+    "category": "style"
+  },
+  {
+    "language": "python",
+    "source": "PEP8",
+    "rule": "A Foolish Consistency is the Hobgoblin of Little Minds",
+    "description": "One of Guido\u2019s key insights is that code is read much more often than\nit is written.  The guidelines provided here are intended to improve\nthe readability of code and make it consistent across the wide\nspectrum of Python code.  AsPEP 20says, \u201cReadability counts\u201d. A style guide is about consistency.  Consistency with this style guide\nis important.  Consistency within a project is more important.\nConsistency within one module or function is the most important. However, know when to be inconsistent \u2013 sometimes style guide\nrecommendations just aren\u2019t applicable.  When in doubt, use your best\njudgment.  Look at other examples and decide what looks best.  And\ndon\u2019t hesitate to ask! In particular: ",
+    "category": "style"
+  },
+  {
+    "language": "python",
+    "source": "PEP8",
+    "rule": "Indentation",
+    "description": "Use 4 spaces per indentation level. Continuation lines should align wrapped elements either vertically\nusing Python\u2019s implicit line joining inside parentheses, brackets and\nbraces, or using ahanging indent[1].  When using a hanging\nindent the following should be considered; there should be no\narguments on the first line and further indentation should be used to\nclearly distinguish itself as a continuation line: The 4-space rule is optional for continuation lines. Optional: When the conditional part of anif-statement is long enough to require\nthat it be written across multiple lines, it\u2019s worth noting that the\ncombination of a two character keyword (i.e.if), plus a single space,\nplus an openi",
+    "category": "style"
+  },
+  {
+    "language": "python",
+    "source": "PEP8",
+    "rule": "Tabs or Spaces?",
+    "description": "Spaces are the preferred indentation method. Tabs should be used solely to remain consistent with code that is\nalready indented with tabs. Python disallows mixing tabs and spaces for indentation.",
+    "category": "style"
+  },
+  {
+    "language": "python",
+    "source": "PEP8",
+    "rule": "Maximum Line Length",
+    "description": "Limit all lines to a maximum of 79 characters. For flowing long blocks of text with fewer structural restrictions\n(docstrings or comments), the line length should be limited to 72\ncharacters. Limiting the required editor window width makes it possible to have\nseveral files open side by side, and works well when using code\nreview tools that present the two versions in adjacent columns. The default wrapping in most tools disrupts the visual structure of the\ncode, making it more difficult to understand. The limits are chosen to\navoid wrapping in editors with the window width set to 80, even\nif the tool places a marker glyph in the final column when wrapping\nlines. Some web based tools may not o",
+    "category": "style"
+  },
+  {
+    "language": "python",
+    "source": "PEP8",
+    "rule": "Should a Line Break Before or After a Binary Operator?",
+    "description": "For decades the recommended style was to break after binary operators.\nBut this can hurt readability in two ways: the operators tend to get\nscattered across different columns on the screen, and each operator is\nmoved away from its operand and onto the previous line.  Here, the eye\nhas to do extra work to tell which items are added and which are\nsubtracted: To solve this readability problem, mathematicians and their publishers\nfollow the opposite convention.  Donald Knuth explains the traditional\nrule in hisComputers and Typesettingseries: \u201cAlthough formulas\nwithin a paragraph always break after binary operations and relations,\ndisplayed formulas always break before binary operations\u201d[3]. Fol",
+    "category": "style"
+  },
+  {
+    "language": "python",
+    "source": "PEP8",
+    "rule": "Blank Lines",
+    "description": "Surround top-level function and class definitions with two blank\nlines. Method definitions inside a class are surrounded by a single blank\nline. Extra blank lines may be used (sparingly) to separate groups of\nrelated functions.  Blank lines may be omitted between a bunch of\nrelated one-liners (e.g. a set of dummy implementations). Use blank lines in functions, sparingly, to indicate logical sections. Python accepts the control-L (i.e. ^L) form feed character as\nwhitespace; many tools treat these characters as page separators, so\nyou may use them to separate pages of related sections of your file.\nNote, some editors and web-based code viewers may not recognize\ncontrol-L as a form feed and wil",
+    "category": "style"
+  },
+  {
+    "language": "python",
+    "source": "PEP8",
+    "rule": "Source File Encoding",
+    "description": "Code in the core Python distribution should always use UTF-8, and should not\nhave an encoding declaration. In the standard library, non-UTF-8 encodings should be used only for\ntest purposes. Use non-ASCII characters sparingly, preferably only to\ndenote places and human names. If using non-ASCII characters as data,\navoid noisy Unicode characters like z\u0361\u032f\u032fa\u0327\u034e\u033al\u0321\u0353\u032bg\u0339\u0332o\u0321\u033c\u0318 and byte order\nmarks. All identifiers in the Python standard library MUST use ASCII-only\nidentifiers, and SHOULD use English words wherever feasible (in many\ncases, abbreviations and technical terms are used which aren\u2019t\nEnglish). Open source projects with a global audience are encouraged to adopt a\nsimilar policy.",
+    "category": "style"
+  },
+  {
+    "language": "python",
+    "source": "PEP8",
+    "rule": "Module Level Dunder Names",
+    "description": "Module level \u201cdunders\u201d (i.e. names with two leading and two trailing\nunderscores) such as__all__,__author__,__version__,\netc. should be placed after the module docstring but before any import\nstatementsexceptfrom__future__imports.  Python mandates that\nfuture-imports must appear in the module before any other code except\ndocstrings:",
+    "category": "style"
+  },
+  {
+    "language": "python",
+    "source": "PEP8",
+    "rule": "String Quotes",
+    "description": "In Python, single-quoted strings and double-quoted strings are the\nsame.  This PEP does not make a recommendation for this.  Pick a rule\nand stick to it.  When a string contains single or double quote\ncharacters, however, use the other one to avoid backslashes in the\nstring. It improves readability. For triple-quoted strings, always use double quote characters to be\nconsistent with the docstring convention inPEP 257.",
+    "category": "style"
+  },
+  {
+    "language": "python",
+    "source": "PEP8",
+    "rule": "Pet Peeves",
+    "description": "Avoid extraneous whitespace in the following situations:",
+    "category": "style"
+  },
+  {
+    "language": "python",
+    "source": "PEP8",
+    "rule": "When to Use Trailing Commas",
+    "description": "Trailing commas are usually optional, except they are mandatory when\nmaking a tuple of one element.  For clarity, it is recommended to\nsurround the latter in (technically redundant) parentheses: When trailing commas are redundant, they are often helpful when a\nversion control system is used, when a list of values, arguments or\nimported items is expected to be extended over time.  The pattern is\nto put each value (etc.) on a line by itself, always adding a trailing\ncomma, and add the close parenthesis/bracket/brace on the next line.\nHowever it does not make sense to have a trailing comma on the same\nline as the closing delimiter (except in the above case of singleton\ntuples):",
+    "category": "style"
+  },
+  {
+    "language": "python",
+    "source": "PEP8",
+    "rule": "Comments",
+    "description": "Comments that contradict the code are worse than no comments.  Always\nmake a priority of keeping the comments up-to-date when the code\nchanges! Comments should be complete sentences.  The first word should be\ncapitalized, unless it is an identifier that begins with a lower case\nletter (never alter the case of identifiers!). Block comments generally consist of one or more paragraphs built out of\ncomplete sentences, with each sentence ending in a period. You should use one or two spaces after a sentence-ending period in\nmulti-sentence comments, except after the final sentence. Ensure that your comments are clear and easily understandable to other\nspeakers of the language you are writing in. Py",
+    "category": "style"
+  },
+  {
+    "language": "python",
+    "source": "PEP8",
+    "rule": "Block Comments",
+    "description": "Block comments generally apply to some (or all) code that follows\nthem, and are indented to the same level as that code.  Each line of a\nblock comment starts with a#and a single space (unless it is\nindented text inside the comment). Paragraphs inside a block comment are separated by a line containing a\nsingle#.",
+    "category": "style"
+  },
+  {
+    "language": "python",
+    "source": "PEP8",
+    "rule": "Inline Comments",
+    "description": "Use inline comments sparingly. An inline comment is a comment on the same line as a statement.\nInline comments should be separated by at least two spaces from the\nstatement.  They should start with a # and a single space. Inline comments are unnecessary and in fact distracting if they state\nthe obvious.  Don\u2019t do this: But sometimes, this is useful:",
+    "category": "style"
+  },
+  {
+    "language": "python",
+    "source": "PEP8",
+    "rule": "Documentation Strings",
+    "description": "Conventions for writing good documentation strings\n(a.k.a. \u201cdocstrings\u201d) are immortalized inPEP 257.",
+    "category": "style"
+  },
+  {
+    "language": "python",
+    "source": "PEP8",
+    "rule": "Naming Conventions",
+    "description": "The naming conventions of Python\u2019s library are a bit of a mess, so\nwe\u2019ll never get this completely consistent \u2013 nevertheless, here are\nthe currently recommended naming standards.  New modules and packages\n(including third party frameworks) should be written to these\nstandards, but where an existing library has a different style,\ninternal consistency is preferred.",
+    "category": "style"
+  },
+  {
+    "language": "python",
+    "source": "PEP8",
+    "rule": "Overriding Principle",
+    "description": "Names that are visible to the user as public parts of the API should\nfollow conventions that reflect usage rather than implementation.",
+    "category": "style"
+  },
+  {
+    "language": "python",
+    "source": "PEP8",
+    "rule": "Descriptive: Naming Styles",
+    "description": "There are a lot of different naming styles.  It helps to be able to\nrecognize what naming style is being used, independently from what\nthey are used for. The following naming styles are commonly distinguished: There\u2019s also the style of using a short unique prefix to group related\nnames together.  This is not used much in Python, but it is mentioned\nfor completeness.  For example, theos.stat()function returns a\ntuple whose items traditionally have names likest_mode,st_size,st_mtimeand so on.  (This is done to emphasize the\ncorrespondence with the fields of the POSIX system call struct, which\nhelps programmers familiar with that.) The X11 library uses a leading X for all its public functions. ",
+    "category": "style"
+  },
+  {
+    "language": "python",
+    "source": "PEP8",
+    "rule": "Public and Internal Interfaces",
+    "description": "Any backwards compatibility guarantees apply only to public interfaces.\nAccordingly, it is important that users be able to clearly distinguish\nbetween public and internal interfaces. Documented interfaces are considered public, unless the documentation\nexplicitly declares them to be provisional or internal interfaces exempt\nfrom the usual backwards compatibility guarantees. All undocumented\ninterfaces should be assumed to be internal. To better support introspection, modules should explicitly declare the\nnames in their public API using the__all__attribute. Setting__all__to an empty list indicates that the module has no public API. Even with__all__set appropriately, internal interfaces (packa",
+    "category": "style"
+  },
+  {
+    "language": "python",
+    "source": "PEP8",
+    "rule": "Function Annotations",
+    "description": "With the acceptance ofPEP 484, the style rules for function\nannotations have changed.",
+    "category": "style"
+  },
+  {
+    "language": "python",
+    "source": "PEP8",
+    "rule": "Variable Annotations",
+    "description": "PEP 526introduced variable annotations. The style recommendations for them are\nsimilar to those on function annotations described above: Footnotes",
+    "category": "style"
+  },
+  {
+    "language": "python",
+    "source": "PEP8",
+    "rule": "Copyright",
+    "description": "This document has been placed in the public domain.",
+    "category": "style"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-dupe-class-members",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-useless-constructor",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-await-in-loop",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-inner-declarations",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "logical-assignment-operators",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-return-assign",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "valid-typeof",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "max-params",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-control-regex",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "symbol-description",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "Rules Reference",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-void",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-compare-neg-zero",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "require-atomic-updates",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-negated-condition",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "init-declarations",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "func-names",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-implicit-globals",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-magic-numbers",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-implicit-coercion",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "prefer-exponentiation-operator",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-constructor-return",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "default-case-last",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-func-assign",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-warning-comments",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "yoda",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "for-direction",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-unreachable-loop",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-lone-blocks",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-alert",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-self-assign",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-extra-boolean-cast",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-template-curly-in-string",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "consistent-return",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-unused-vars",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-object-constructor",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "prefer-const",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-setter-return",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-div-regex",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "new-cap",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-useless-computed-key",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "max-lines",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-redeclare",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-useless-return",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-new-wrappers",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-promise-executor-return",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "max-lines-per-function",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-useless-rename",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-useless-backreference",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-sequences",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "sort-vars",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "require-unicode-regexp",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-restricted-imports",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "use-isnan",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-unexpected-multiline",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-multi-assign",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-debugger",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "radix",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-inline-comments",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-irregular-whitespace",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-octal-escape",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "operator-assignment",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "default-param-last",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-duplicate-case",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-var",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-invalid-regexp",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-extend-native",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-with",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "capitalized-comments",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-bitwise",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-misleading-character-class",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "id-length",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-invalid-this",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "prefer-object-spread",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-obj-calls",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-unsafe-finally",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "prefer-numeric-literals",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-empty",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-unassigned-vars",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "javascript",
+    "source": "ESLint",
+    "rule": "no-nonoctal-decimal-escape",
+    "description": "Results will be shown and updated as you type.",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "InstallationCommand line installationEditor and IDE integrationUsing Pylint thro",
+    "description": "InstallationCommand line installationEditor and IDE integrationUsing Pylint through Flymake in EmacsIntegrate Pylint with TextMatePre-commit integrationInstallation with multiple interpretersShow your usageUpgrading pylint",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "Editor and IDE integrationUsing Pylint through Flymake in EmacsIntegrate Pylint ",
+    "description": "Editor and IDE integrationUsing Pylint through Flymake in EmacsIntegrate Pylint with TextMate",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "MessagesMessages overviewastroid-error / F0002config-parse-error / F0011fatal / ",
+    "description": "MessagesMessages overviewastroid-error / F0002config-parse-error / F0011fatal / F0001method-check-failed / F0202parse-error / F0010old-import-error / F0401import-error / E0401abstract-class-instantiated / E0110access-member-before-definition / E0203assigning-non-slot / E0237assignment-from-no-return / E1111assignment-from-none / E1128async-context-manager-with-regular-with / E1145await-outside-async / E1142bad-configuration-section / E0014bad-except-order / E0701bad-exception-cause / E0705bad-format-character / E1300bad-plugin-value / E0013bad-reversed-sequence / E0111bad-str-strip-call / E1310bad-string-format-type / E1307bad-super-call / E1003bare-name-capture-pattern / E1901bidirectional-unicode / E2502broken-collections-callable / E6005broken-noreturn / E6004catching-non-exception / E0712class-variable-slots-conflict / E0242declare-non-slot / E0245dict-iter-missing-items / E1141duplicate-argument-name / E0108duplicate-bases / E0241format-needs-mapping / E1303function-redefined / E0102import-error / E0401inconsistent-mro / E0240inherit-non-class / E0239init-is-generator / E0100invalid-all-format / E0605invalid-all-object / E0604invalid-bool-returned / E0304invalid-bytes-returned / E0308invalid-character-backspace / E2510invalid-character-carriage-return / E2511invalid-character-esc / E2513invalid-character-nul / E2514invalid-character-sub / E2512invalid-character-zero-width-space / E2515invalid-class-object / E0243invalid-enum-extension / E0244invalid-envvar-value / E1507invalid-field-call / E3701invalid-format-returned / E0311invalid-getnewargs-ex-returned / E0313invalid-getnewargs-returned / E0312invalid-hash-returned / E0309invalid-index-returned / E0305invalid-length-hint-returned / E0310invalid-length-returned / E0303invalid-match-args-definition / E1902invalid-metaclass / E1139invalid-repr-returned / E0306invalid-sequence-index / E1126invalid-slice-index / E1127invalid-slice-step / E1144invalid-slots / E0238invalid-slots-object / E0236invalid-star-assignment-target / E0113invalid-str-returned / E0307invalid-unary-operand-type / E1130invalid-unicode-codec / E2501logging-format-truncated / E1201logging-too-few-args / E1206logging-too-many-args / E1205logging-unsupported-format / E1200method-hidden / E0202misplaced-bare-raise / E0704misplaced-format-function / E0119missing-format-string-key / E1304missing-kwoa / E1125mixed-format-string / E1302modified-iterating-dict / E4702modified-iterating-set / E4703multiple-class-sub-patterns / E1904no-member / E1101no-method-argument / E0211no-name-in-module / E0611no-self-argument / E0213no-value-for-parameter / E1120non-iterator-returned / E0301nonexistent-operator / E0107nonlocal-and-global / E0115nonlocal-without-binding / E0117not-a-mapping / E1134not-an-iterable / E1133not-async-context-manager / E1701not-callable / E1102not-context-manager / E1129not-in-loop / E0103notimplemented-raised / E0711positional-only-arguments-expected / E3102possibly-used-before-assignment / E0606potential-index-error / E0643raising-bad-type / E0702raising-non-exception / E0710redundant-keyword-arg / E1124relative-beyond-top-level / E0402repeated-keyword / E1132return-arg-in-generator / E0106return-in-init / E0101return-outside-function / E0104singledispatch-method / E1519singledispatchmethod-function / E1520star-needs-assignment-target / E0114syntax-error / E0001too-few-format-args / E1306too-many-format-args / E1305too-many-function-args / E1121too-many-positional-sub-patterns / E1903too-many-star-expressions / E0112truncated-format-string / E1301undefined-all-variable / E0603undefined-variable / E0602unexpected-keyword-arg / E1123unexpected-special-method-signature / E0302unhashable-member / E1143unpacking-non-sequence / E0633unrecognized-inline-option / E0011unrecognized-option / E0015unsubscriptable-object / E1136unsupported-assignment-operation / E1137unsupported-binary-operation / E1131unsupported-delete-operation / E1138unsupported-membership-test / E1135used-before-assignment / E0601used-prior-global-declaration / E0118yield-inside-async-function / E1700yield-outside-function / E0105bad-context-manager / E0235unexpected-special-method-signature / E0302bad-exception-context / E0703bad-exception-cause / E0705bad-option-value / E0012useless-option-value / R0022unknown-option-value / W0012maybe-no-member / E1103no-member / E1101old-non-iterator-returned-2 / E0234non-iterator-returned / E0301old-unbalanced-tuple-unpacking / E0632unbalanced-tuple-unpacking / W0632unhashable-dict-key / E1140unhashable-member / E1143abstract-method / W0223anomalous-backslash-in-string / W1401anomalous-unicode-escape-in-string / W1402arguments-differ / W0221arguments-out-of-order / W1114arguments-renamed / W0237assert-on-string-literal / W0129assert-on-tuple / W0199attribute-defined-outside-init / W0201bad-builtin / W0141bad-chained-comparison / W3601bad-dunder-name / W3201bad-format-string / W1302bad-format-string-key / W1300bad-indentation / W0311bad-open-mode / W1501bad-staticmethod-argument / W0211bad-thread-instantiation / W1506bare-except / W0702binary-op-exception / W0711boolean-datetime / W1502break-in-finally / W0137broad-exception-caught / W0718broad-exception-raised / W0719cell-var-from-loop / W0640comparison-with-callable / W0143confusing-with-statement / W0124consider-ternary-expression / W0160contextmanager-generator-missing-cleanup / W0135continue-in-finally / W0136dangerous-default-value / W0102deprecated-argument / W4903deprecated-attribute / W4906deprecated-class / W4904deprecated-decorator / W4905deprecated-method / W4902deprecated-module / W4901deprecated-typing-alias / W6001differing-param-doc / W9017differing-type-doc / W9018duplicate-except / W0705duplicate-key / W0109duplicate-string-formatting-argument / W1308duplicate-value / W0130eq-without-hash / W1641eval-used / W0123exec-used / W0122expression-not-assigned / W0106f-string-without-interpolation / W1309fixme / W0511forgotten-debug-statement / W1515format-combined-specification / W1305format-string-without-interpolation / W1310global-at-module-level / W0604global-statement / W0603global-variable-not-assigned / W0602global-variable-undefined / W0601implicit-flag-alias / W0213implicit-str-concat / W1404import-self / W0406inconsistent-quotes / W1405invalid-envvar-default / W1508invalid-format-index / W1307invalid-overridden-method / W0236isinstance-second-argument-not-valid-type / W1116keyword-arg-before-vararg / W1113kwarg-superseded-by-positional-arg / W1117logging-format-interpolation / W1202logging-fstring-interpolation / W1203logging-not-lazy / W1201lost-exception / W0150method-cache-max-size-none / W1518misplaced-future / W0410missing-any-param-doc / W9021missing-format-argument-key / W1303missing-format-attribute / W1306missing-param-doc / W9015missing-parentheses-for-call-in-test / W0126missing-raises-doc / W9006missing-return-doc / W9011missing-return-type-doc / W9012missing-timeout / W3101missing-type-doc / W9016missing-yield-doc / W9013missing-yield-type-doc / W9014modified-iterating-list / W4701multiple-constructor-doc / W9005named-expr-without-context / W0131nan-comparison / W0177nested-min-max / W3301non-ascii-file-name / W2402non-parent-init-called / W0233non-str-assignment-to-dunder-name / W1115overlapping-except / W0714overridden-final-method / W0239pointless-exception-statement / W0133pointless-statement / W0104pointless-string-statement / W0105possibly-unused-variable / W0641preferred-module / W0407protected-access / W0212raise-missing-from / W0707raising-format-tuple / W0715redeclared-assigned-name / W0128redefined-builtin / W0622redefined-loop-name / W2901redefined-outer-name / W0621redefined-slots-in-subclass / W0244redundant-returns-doc / W9008redundant-u-string-prefix / W1406redundant-unittest-assert / W1503redundant-yields-doc / W9010reimported / W0404return-in-finally / W0134self-assigning-variable / W0127self-cls-assignment / W0642shadowed-import / W0416shallow-copy-environ / W1507signature-differs / W0222subclassed-final-class / W0240subprocess-popen-preexec-fn / W1509subprocess-run-check / W1510super-init-not-called / W0231super-without-brackets / W0245too-many-try-statements / W0717try-except-raise / W0706unbalanced-dict-unpacking / W0644unbalanced-tuple-unpacking / W0632undefined-loop-variable / W0631unknown-option-value / W0012unnecessary-ellipsis / W2301unnecessary-lambda / W0108unnecessary-pass / W0107unnecessary-semicolon / W0301unreachable / W0101unspecified-encoding / W1514unused-argument / W0613unused-format-string-argument / W1304unused-format-string-key / W1301unused-import / W0611unused-private-member / W0238unused-variable / W0612unused-wildcard-import / W0614useless-else-on-loop / W0120useless-param-doc / W9019useless-parent-delegation / W0246useless-type-doc / W9020useless-with-lock / W2101using-assignment-expression-in-unsupported-version / W2605using-constant-test / W0125using-exception-groups-in-unsupported-version / W2603using-f-string-in-unsupported-version / W2601using-final-decorator-in-unsupported-version / W2602using-generic-type-syntax-in-unsupported-version / W2604using-positional-only-args-in-unsupported-version / W2606while-used / W0149wildcard-import / W0401wrong-exception-operation / W0716broad-except / W0703broad-exception-caught / W0718cache-max-size-none / W1517method-cache-max-size-none / W1518implicit-str-concat-in-sequence / W1403implicit-str-concat / W1404lru-cache-decorating-method / W1516method-cache-max-size-none / W1518old-assignment-from-none / W1111assignment-from-none / E1128old-deprecated-argument / W1511deprecated-argument / W4903old-deprecated-class / W1512deprecated-class / W4904old-deprecated-decorator / W1513deprecated-decorator / W4905old-deprecated-method / W1505deprecated-method / W4902old-deprecated-module / W0402deprecated-module / W4901old-empty-docstring / W0132empty-docstring / C0112old-missing-param-doc / W9003missing-param-doc / W9015old-missing-returns-doc / W9007missing-return-doc / W9011old-missing-type-doc / W9004missing-type-doc / W9016old-missing-yields-doc / W9009missing-yield-doc / W9013old-non-iterator-returned-1 / W0234non-iterator-returned / E0301old-unidiomatic-typecheck / W0154unidiomatic-typecheck / C0123old-unpacking-non-sequence / W0633unpacking-non-sequence / E0633useless-super-delegation / W0235useless-parent-delegation / W0246bad-classmethod-argument / C0202bad-docstring-quotes / C0198bad-file-encoding / C2503bad-mcs-classmethod-argument / C0204bad-mcs-method-argument / C0203consider-iterating-dictionary / C0201consider-using-any-or-all / C0501consider-using-dict-items / C0206consider-using-enumerate / C0200consider-using-f-string / C0209dict-init-mutate / C3401disallowed-name / C0104docstring-first-line-empty / C0199empty-docstring / C0112import-outside-toplevel / C0415import-private-name / C2701invalid-characters-in-docstring / C0403invalid-name / C0103line-too-long / C0301misplaced-comparison-constant / C2201missing-class-docstring / C0115missing-final-newline / C0304missing-function-docstring / C0116missing-module-docstring / C0114mixed-line-endings / C0327multiple-imports / C0410multiple-statements / C0321non-ascii-module-import / C2403non-ascii-name / C2401single-string-used-for-slots / C0205singleton-comparison / C0121superfluous-parens / C0325too-many-lines / C0302trailing-newlines / C0305trailing-whitespace / C0303typevar-double-variance / C0131typevar-name-incorrect-variance / C0105typevar-name-mismatch / C0132unexpected-line-ending-format / C0328ungrouped-imports / C0412unidiomatic-typecheck / C0123unnecessary-direct-lambda-call / C3002unnecessary-dunder-call / C2801unnecessary-lambda-assignment / C3001unnecessary-negation / C0117use-implicit-booleaness-not-comparison / C1803use-implicit-booleaness-not-comparison-to-string / C1804use-implicit-booleaness-not-comparison-to-zero / C1805use-implicit-booleaness-not-len / C1802use-maxsplit-arg / C0207use-sequence-for-iteration / C0208useless-import-alias / C0414wrong-import-order / C0411wrong-import-position / C0413wrong-spelling-in-comment / C0401wrong-spelling-in-docstring / C0402blacklisted-name / C0102disallowed-name / C0104compare-to-empty-string / C1901use-implicit-booleaness-not-comparison-to-string / C1804compare-to-zero / C2001use-implicit-booleaness-not-comparison-to-zero / C1805len-as-condition / C1801use-implicit-booleaness-not-len / C1802missing-docstring / C0111missing-module-docstring / C0114missing-class-docstring / C0115missing-function-docstring / C0116old-misplaced-comparison-constant / C0122misplaced-comparison-constant / C2201old-non-ascii-name / C0144non-ascii-name / C2401unneeded-not / C0113unnecessary-negation / C0117chained-comparison / R1716comparison-of-constants / R0133comparison-with-itself / R0124condition-evals-to-constant / R1727confusing-consecutive-elif / R5601consider-alternative-union-syntax / R6003consider-math-not-float / R6106consider-merging-isinstance / R1701consider-refactoring-into-while-condition / R3501consider-swap-variables / R1712consider-using-alias / R6002consider-using-assignment-expr / R6103consider-using-augmented-assign / R6104consider-using-dict-comprehension / R1717consider-using-from-import / R0402consider-using-generator / R1728consider-using-get / R1715consider-using-in / R1714consider-using-join / R1713consider-using-max-builtin / R1731consider-using-min-builtin / R1730consider-using-namedtuple-or-dataclass / R6101consider-using-set-comprehension / R1718consider-using-sys-exit / R1722consider-using-ternary / R1706consider-using-tuple / R6102consider-using-with / R1732cyclic-import / R0401duplicate-code / R0801else-if-used / R5501empty-comment / R2044inconsistent-return-statements / R1710literal-comparison / R0123magic-value-comparison / R2004match-class-bind-self / R1905match-class-positional-attributes / R1906no-classmethod-decorator / R0202no-else-break / R1723no-else-continue / R1724no-else-raise / R1720no-else-return / R1705no-self-use / R6301no-staticmethod-decorator / R0203prefer-typing-namedtuple / R6105property-with-parameters / R0206redefined-argument-from-local / R1704redefined-variable-type / R0204redundant-typehint-argument / R6006simplifiable-condition / R1726simplifiable-if-expression / R1719simplifiable-if-statement / R1703simplify-boolean-expression / R1709stop-iteration-return / R1708super-with-arguments / R1725too-complex / R1260too-few-public-methods / R0903too-many-ancestors / R0901too-many-arguments / R0913too-many-boolean-expressions / R0916too-many-branches / R0912too-many-instance-attributes / R0902too-many-locals / R0914too-many-nested-blocks / R1702too-many-positional-arguments / R0917too-many-public-methods / R0904too-many-return-statements / R0911too-many-statements / R0915trailing-comma-tuple / R1707unnecessary-comprehension / R1721unnecessary-default-type-args / R6007unnecessary-dict-index-lookup / R1733unnecessary-list-index-lookup / R1736use-a-generator / R1729use-dict-literal / R1735use-list-literal / R1734use-set-for-membership / R6201use-yield-from / R1737useless-object-inheritance / R0205useless-option-value / R0022useless-return / R1711old-no-self-use / R0201no-self-use / R6301old-simplifiable-if-statement / R0102simplifiable-if-statement / R1703old-too-many-nested-blocks / R0101too-many-nested-blocks / R1702bad-inline-option / I0010c-extension-no-member / I1101deprecated-pragma / I0022file-ignored / I0013locally-disabled / I0011raw-checker-failed / I0001suppressed-message / I0020use-symbolic-message-instead / I0023useless-suppression / I0021deprecated-disable-all / I0014deprecated-pragma / I0022Messages control",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "Messages overviewastroid-error / F0002config-parse-error / F0011fatal / F0001met",
+    "description": "Messages overviewastroid-error / F0002config-parse-error / F0011fatal / F0001method-check-failed / F0202parse-error / F0010old-import-error / F0401import-error / E0401abstract-class-instantiated / E0110access-member-before-definition / E0203assigning-non-slot / E0237assignment-from-no-return / E1111assignment-from-none / E1128async-context-manager-with-regular-with / E1145await-outside-async / E1142bad-configuration-section / E0014bad-except-order / E0701bad-exception-cause / E0705bad-format-character / E1300bad-plugin-value / E0013bad-reversed-sequence / E0111bad-str-strip-call / E1310bad-string-format-type / E1307bad-super-call / E1003bare-name-capture-pattern / E1901bidirectional-unicode / E2502broken-collections-callable / E6005broken-noreturn / E6004catching-non-exception / E0712class-variable-slots-conflict / E0242declare-non-slot / E0245dict-iter-missing-items / E1141duplicate-argument-name / E0108duplicate-bases / E0241format-needs-mapping / E1303function-redefined / E0102import-error / E0401inconsistent-mro / E0240inherit-non-class / E0239init-is-generator / E0100invalid-all-format / E0605invalid-all-object / E0604invalid-bool-returned / E0304invalid-bytes-returned / E0308invalid-character-backspace / E2510invalid-character-carriage-return / E2511invalid-character-esc / E2513invalid-character-nul / E2514invalid-character-sub / E2512invalid-character-zero-width-space / E2515invalid-class-object / E0243invalid-enum-extension / E0244invalid-envvar-value / E1507invalid-field-call / E3701invalid-format-returned / E0311invalid-getnewargs-ex-returned / E0313invalid-getnewargs-returned / E0312invalid-hash-returned / E0309invalid-index-returned / E0305invalid-length-hint-returned / E0310invalid-length-returned / E0303invalid-match-args-definition / E1902invalid-metaclass / E1139invalid-repr-returned / E0306invalid-sequence-index / E1126invalid-slice-index / E1127invalid-slice-step / E1144invalid-slots / E0238invalid-slots-object / E0236invalid-star-assignment-target / E0113invalid-str-returned / E0307invalid-unary-operand-type / E1130invalid-unicode-codec / E2501logging-format-truncated / E1201logging-too-few-args / E1206logging-too-many-args / E1205logging-unsupported-format / E1200method-hidden / E0202misplaced-bare-raise / E0704misplaced-format-function / E0119missing-format-string-key / E1304missing-kwoa / E1125mixed-format-string / E1302modified-iterating-dict / E4702modified-iterating-set / E4703multiple-class-sub-patterns / E1904no-member / E1101no-method-argument / E0211no-name-in-module / E0611no-self-argument / E0213no-value-for-parameter / E1120non-iterator-returned / E0301nonexistent-operator / E0107nonlocal-and-global / E0115nonlocal-without-binding / E0117not-a-mapping / E1134not-an-iterable / E1133not-async-context-manager / E1701not-callable / E1102not-context-manager / E1129not-in-loop / E0103notimplemented-raised / E0711positional-only-arguments-expected / E3102possibly-used-before-assignment / E0606potential-index-error / E0643raising-bad-type / E0702raising-non-exception / E0710redundant-keyword-arg / E1124relative-beyond-top-level / E0402repeated-keyword / E1132return-arg-in-generator / E0106return-in-init / E0101return-outside-function / E0104singledispatch-method / E1519singledispatchmethod-function / E1520star-needs-assignment-target / E0114syntax-error / E0001too-few-format-args / E1306too-many-format-args / E1305too-many-function-args / E1121too-many-positional-sub-patterns / E1903too-many-star-expressions / E0112truncated-format-string / E1301undefined-all-variable / E0603undefined-variable / E0602unexpected-keyword-arg / E1123unexpected-special-method-signature / E0302unhashable-member / E1143unpacking-non-sequence / E0633unrecognized-inline-option / E0011unrecognized-option / E0015unsubscriptable-object / E1136unsupported-assignment-operation / E1137unsupported-binary-operation / E1131unsupported-delete-operation / E1138unsupported-membership-test / E1135used-before-assignment / E0601used-prior-global-declaration / E0118yield-inside-async-function / E1700yield-outside-function / E0105bad-context-manager / E0235unexpected-special-method-signature / E0302bad-exception-context / E0703bad-exception-cause / E0705bad-option-value / E0012useless-option-value / R0022unknown-option-value / W0012maybe-no-member / E1103no-member / E1101old-non-iterator-returned-2 / E0234non-iterator-returned / E0301old-unbalanced-tuple-unpacking / E0632unbalanced-tuple-unpacking / W0632unhashable-dict-key / E1140unhashable-member / E1143abstract-method / W0223anomalous-backslash-in-string / W1401anomalous-unicode-escape-in-string / W1402arguments-differ / W0221arguments-out-of-order / W1114arguments-renamed / W0237assert-on-string-literal / W0129assert-on-tuple / W0199attribute-defined-outside-init / W0201bad-builtin / W0141bad-chained-comparison / W3601bad-dunder-name / W3201bad-format-string / W1302bad-format-string-key / W1300bad-indentation / W0311bad-open-mode / W1501bad-staticmethod-argument / W0211bad-thread-instantiation / W1506bare-except / W0702binary-op-exception / W0711boolean-datetime / W1502break-in-finally / W0137broad-exception-caught / W0718broad-exception-raised / W0719cell-var-from-loop / W0640comparison-with-callable / W0143confusing-with-statement / W0124consider-ternary-expression / W0160contextmanager-generator-missing-cleanup / W0135continue-in-finally / W0136dangerous-default-value / W0102deprecated-argument / W4903deprecated-attribute / W4906deprecated-class / W4904deprecated-decorator / W4905deprecated-method / W4902deprecated-module / W4901deprecated-typing-alias / W6001differing-param-doc / W9017differing-type-doc / W9018duplicate-except / W0705duplicate-key / W0109duplicate-string-formatting-argument / W1308duplicate-value / W0130eq-without-hash / W1641eval-used / W0123exec-used / W0122expression-not-assigned / W0106f-string-without-interpolation / W1309fixme / W0511forgotten-debug-statement / W1515format-combined-specification / W1305format-string-without-interpolation / W1310global-at-module-level / W0604global-statement / W0603global-variable-not-assigned / W0602global-variable-undefined / W0601implicit-flag-alias / W0213implicit-str-concat / W1404import-self / W0406inconsistent-quotes / W1405invalid-envvar-default / W1508invalid-format-index / W1307invalid-overridden-method / W0236isinstance-second-argument-not-valid-type / W1116keyword-arg-before-vararg / W1113kwarg-superseded-by-positional-arg / W1117logging-format-interpolation / W1202logging-fstring-interpolation / W1203logging-not-lazy / W1201lost-exception / W0150method-cache-max-size-none / W1518misplaced-future / W0410missing-any-param-doc / W9021missing-format-argument-key / W1303missing-format-attribute / W1306missing-param-doc / W9015missing-parentheses-for-call-in-test / W0126missing-raises-doc / W9006missing-return-doc / W9011missing-return-type-doc / W9012missing-timeout / W3101missing-type-doc / W9016missing-yield-doc / W9013missing-yield-type-doc / W9014modified-iterating-list / W4701multiple-constructor-doc / W9005named-expr-without-context / W0131nan-comparison / W0177nested-min-max / W3301non-ascii-file-name / W2402non-parent-init-called / W0233non-str-assignment-to-dunder-name / W1115overlapping-except / W0714overridden-final-method / W0239pointless-exception-statement / W0133pointless-statement / W0104pointless-string-statement / W0105possibly-unused-variable / W0641preferred-module / W0407protected-access / W0212raise-missing-from / W0707raising-format-tuple / W0715redeclared-assigned-name / W0128redefined-builtin / W0622redefined-loop-name / W2901redefined-outer-name / W0621redefined-slots-in-subclass / W0244redundant-returns-doc / W9008redundant-u-string-prefix / W1406redundant-unittest-assert / W1503redundant-yields-doc / W9010reimported / W0404return-in-finally / W0134self-assigning-variable / W0127self-cls-assignment / W0642shadowed-import / W0416shallow-copy-environ / W1507signature-differs / W0222subclassed-final-class / W0240subprocess-popen-preexec-fn / W1509subprocess-run-check / W1510super-init-not-called / W0231super-without-brackets / W0245too-many-try-statements / W0717try-except-raise / W0706unbalanced-dict-unpacking / W0644unbalanced-tuple-unpacking / W0632undefined-loop-variable / W0631unknown-option-value / W0012unnecessary-ellipsis / W2301unnecessary-lambda / W0108unnecessary-pass / W0107unnecessary-semicolon / W0301unreachable / W0101unspecified-encoding / W1514unused-argument / W0613unused-format-string-argument / W1304unused-format-string-key / W1301unused-import / W0611unused-private-member / W0238unused-variable / W0612unused-wildcard-import / W0614useless-else-on-loop / W0120useless-param-doc / W9019useless-parent-delegation / W0246useless-type-doc / W9020useless-with-lock / W2101using-assignment-expression-in-unsupported-version / W2605using-constant-test / W0125using-exception-groups-in-unsupported-version / W2603using-f-string-in-unsupported-version / W2601using-final-decorator-in-unsupported-version / W2602using-generic-type-syntax-in-unsupported-version / W2604using-positional-only-args-in-unsupported-version / W2606while-used / W0149wildcard-import / W0401wrong-exception-operation / W0716broad-except / W0703broad-exception-caught / W0718cache-max-size-none / W1517method-cache-max-size-none / W1518implicit-str-concat-in-sequence / W1403implicit-str-concat / W1404lru-cache-decorating-method / W1516method-cache-max-size-none / W1518old-assignment-from-none / W1111assignment-from-none / E1128old-deprecated-argument / W1511deprecated-argument / W4903old-deprecated-class / W1512deprecated-class / W4904old-deprecated-decorator / W1513deprecated-decorator / W4905old-deprecated-method / W1505deprecated-method / W4902old-deprecated-module / W0402deprecated-module / W4901old-empty-docstring / W0132empty-docstring / C0112old-missing-param-doc / W9003missing-param-doc / W9015old-missing-returns-doc / W9007missing-return-doc / W9011old-missing-type-doc / W9004missing-type-doc / W9016old-missing-yields-doc / W9009missing-yield-doc / W9013old-non-iterator-returned-1 / W0234non-iterator-returned / E0301old-unidiomatic-typecheck / W0154unidiomatic-typecheck / C0123old-unpacking-non-sequence / W0633unpacking-non-sequence / E0633useless-super-delegation / W0235useless-parent-delegation / W0246bad-classmethod-argument / C0202bad-docstring-quotes / C0198bad-file-encoding / C2503bad-mcs-classmethod-argument / C0204bad-mcs-method-argument / C0203consider-iterating-dictionary / C0201consider-using-any-or-all / C0501consider-using-dict-items / C0206consider-using-enumerate / C0200consider-using-f-string / C0209dict-init-mutate / C3401disallowed-name / C0104docstring-first-line-empty / C0199empty-docstring / C0112import-outside-toplevel / C0415import-private-name / C2701invalid-characters-in-docstring / C0403invalid-name / C0103line-too-long / C0301misplaced-comparison-constant / C2201missing-class-docstring / C0115missing-final-newline / C0304missing-function-docstring / C0116missing-module-docstring / C0114mixed-line-endings / C0327multiple-imports / C0410multiple-statements / C0321non-ascii-module-import / C2403non-ascii-name / C2401single-string-used-for-slots / C0205singleton-comparison / C0121superfluous-parens / C0325too-many-lines / C0302trailing-newlines / C0305trailing-whitespace / C0303typevar-double-variance / C0131typevar-name-incorrect-variance / C0105typevar-name-mismatch / C0132unexpected-line-ending-format / C0328ungrouped-imports / C0412unidiomatic-typecheck / C0123unnecessary-direct-lambda-call / C3002unnecessary-dunder-call / C2801unnecessary-lambda-assignment / C3001unnecessary-negation / C0117use-implicit-booleaness-not-comparison / C1803use-implicit-booleaness-not-comparison-to-string / C1804use-implicit-booleaness-not-comparison-to-zero / C1805use-implicit-booleaness-not-len / C1802use-maxsplit-arg / C0207use-sequence-for-iteration / C0208useless-import-alias / C0414wrong-import-order / C0411wrong-import-position / C0413wrong-spelling-in-comment / C0401wrong-spelling-in-docstring / C0402blacklisted-name / C0102disallowed-name / C0104compare-to-empty-string / C1901use-implicit-booleaness-not-comparison-to-string / C1804compare-to-zero / C2001use-implicit-booleaness-not-comparison-to-zero / C1805len-as-condition / C1801use-implicit-booleaness-not-len / C1802missing-docstring / C0111missing-module-docstring / C0114missing-class-docstring / C0115missing-function-docstring / C0116old-misplaced-comparison-constant / C0122misplaced-comparison-constant / C2201old-non-ascii-name / C0144non-ascii-name / C2401unneeded-not / C0113unnecessary-negation / C0117chained-comparison / R1716comparison-of-constants / R0133comparison-with-itself / R0124condition-evals-to-constant / R1727confusing-consecutive-elif / R5601consider-alternative-union-syntax / R6003consider-math-not-float / R6106consider-merging-isinstance / R1701consider-refactoring-into-while-condition / R3501consider-swap-variables / R1712consider-using-alias / R6002consider-using-assignment-expr / R6103consider-using-augmented-assign / R6104consider-using-dict-comprehension / R1717consider-using-from-import / R0402consider-using-generator / R1728consider-using-get / R1715consider-using-in / R1714consider-using-join / R1713consider-using-max-builtin / R1731consider-using-min-builtin / R1730consider-using-namedtuple-or-dataclass / R6101consider-using-set-comprehension / R1718consider-using-sys-exit / R1722consider-using-ternary / R1706consider-using-tuple / R6102consider-using-with / R1732cyclic-import / R0401duplicate-code / R0801else-if-used / R5501empty-comment / R2044inconsistent-return-statements / R1710literal-comparison / R0123magic-value-comparison / R2004match-class-bind-self / R1905match-class-positional-attributes / R1906no-classmethod-decorator / R0202no-else-break / R1723no-else-continue / R1724no-else-raise / R1720no-else-return / R1705no-self-use / R6301no-staticmethod-decorator / R0203prefer-typing-namedtuple / R6105property-with-parameters / R0206redefined-argument-from-local / R1704redefined-variable-type / R0204redundant-typehint-argument / R6006simplifiable-condition / R1726simplifiable-if-expression / R1719simplifiable-if-statement / R1703simplify-boolean-expression / R1709stop-iteration-return / R1708super-with-arguments / R1725too-complex / R1260too-few-public-methods / R0903too-many-ancestors / R0901too-many-arguments / R0913too-many-boolean-expressions / R0916too-many-branches / R0912too-many-instance-attributes / R0902too-many-locals / R0914too-many-nested-blocks / R1702too-many-positional-arguments / R0917too-many-public-methods / R0904too-many-return-statements / R0911too-many-statements / R0915trailing-comma-tuple / R1707unnecessary-comprehension / R1721unnecessary-default-type-args / R6007unnecessary-dict-index-lookup / R1733unnecessary-list-index-lookup / R1736use-a-generator / R1729use-dict-literal / R1735use-list-literal / R1734use-set-for-membership / R6201use-yield-from / R1737useless-object-inheritance / R0205useless-option-value / R0022useless-return / R1711old-no-self-use / R0201no-self-use / R6301old-simplifiable-if-statement / R0102simplifiable-if-statement / R1703old-too-many-nested-blocks / R0101too-many-nested-blocks / R1702bad-inline-option / I0010c-extension-no-member / I1101deprecated-pragma / I0022file-ignored / I0013locally-disabled / I0011raw-checker-failed / I0001suppressed-message / I0020use-symbolic-message-instead / I0023useless-suppression / I0021deprecated-disable-all / I0014deprecated-pragma / I0022",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "old-import-error / F0401import-error / E0401",
+    "description": "old-import-error / F0401import-error / E0401",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "async-context-manager-with-regular-with / E1145",
+    "description": "async-context-manager-with-regular-with / E1145",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "invalid-character-carriage-return / E2511",
+    "description": "invalid-character-carriage-return / E2511",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "invalid-character-zero-width-space / E2515",
+    "description": "invalid-character-zero-width-space / E2515",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "positional-only-arguments-expected / E3102",
+    "description": "positional-only-arguments-expected / E3102",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "unexpected-special-method-signature / E0302",
+    "description": "unexpected-special-method-signature / E0302",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "bad-context-manager / E0235unexpected-special-method-signature / E0302",
+    "description": "bad-context-manager / E0235unexpected-special-method-signature / E0302",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "unexpected-special-method-signature / E0302",
+    "description": "unexpected-special-method-signature / E0302",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "bad-exception-context / E0703bad-exception-cause / E0705",
+    "description": "bad-exception-context / E0703bad-exception-cause / E0705",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "bad-option-value / E0012useless-option-value / R0022unknown-option-value / W0012",
+    "description": "bad-option-value / E0012useless-option-value / R0022unknown-option-value / W0012",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "old-non-iterator-returned-2 / E0234non-iterator-returned / E0301",
+    "description": "old-non-iterator-returned-2 / E0234non-iterator-returned / E0301",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "old-unbalanced-tuple-unpacking / E0632unbalanced-tuple-unpacking / W0632",
+    "description": "old-unbalanced-tuple-unpacking / E0632unbalanced-tuple-unpacking / W0632",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "unhashable-dict-key / E1140unhashable-member / E1143",
+    "description": "unhashable-dict-key / E1140unhashable-member / E1143",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "anomalous-unicode-escape-in-string / W1402",
+    "description": "anomalous-unicode-escape-in-string / W1402",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "contextmanager-generator-missing-cleanup / W0135",
+    "description": "contextmanager-generator-missing-cleanup / W0135",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "duplicate-string-formatting-argument / W1308",
+    "description": "duplicate-string-formatting-argument / W1308",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "format-string-without-interpolation / W1310",
+    "description": "format-string-without-interpolation / W1310",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "isinstance-second-argument-not-valid-type / W1116",
+    "description": "isinstance-second-argument-not-valid-type / W1116",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "kwarg-superseded-by-positional-arg / W1117",
+    "description": "kwarg-superseded-by-positional-arg / W1117",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "missing-parentheses-for-call-in-test / W0126",
+    "description": "missing-parentheses-for-call-in-test / W0126",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "non-str-assignment-to-dunder-name / W1115",
+    "description": "non-str-assignment-to-dunder-name / W1115",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "using-assignment-expression-in-unsupported-version / W2605",
+    "description": "using-assignment-expression-in-unsupported-version / W2605",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "using-exception-groups-in-unsupported-version / W2603",
+    "description": "using-exception-groups-in-unsupported-version / W2603",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "using-f-string-in-unsupported-version / W2601",
+    "description": "using-f-string-in-unsupported-version / W2601",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "using-final-decorator-in-unsupported-version / W2602",
+    "description": "using-final-decorator-in-unsupported-version / W2602",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "using-generic-type-syntax-in-unsupported-version / W2604",
+    "description": "using-generic-type-syntax-in-unsupported-version / W2604",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "using-positional-only-args-in-unsupported-version / W2606",
+    "description": "using-positional-only-args-in-unsupported-version / W2606",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "broad-except / W0703broad-exception-caught / W0718",
+    "description": "broad-except / W0703broad-exception-caught / W0718",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "cache-max-size-none / W1517method-cache-max-size-none / W1518",
+    "description": "cache-max-size-none / W1517method-cache-max-size-none / W1518",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "implicit-str-concat-in-sequence / W1403implicit-str-concat / W1404",
+    "description": "implicit-str-concat-in-sequence / W1403implicit-str-concat / W1404",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "lru-cache-decorating-method / W1516method-cache-max-size-none / W1518",
+    "description": "lru-cache-decorating-method / W1516method-cache-max-size-none / W1518",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "old-assignment-from-none / W1111assignment-from-none / E1128",
+    "description": "old-assignment-from-none / W1111assignment-from-none / E1128",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "old-deprecated-argument / W1511deprecated-argument / W4903",
+    "description": "old-deprecated-argument / W1511deprecated-argument / W4903",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "old-deprecated-class / W1512deprecated-class / W4904",
+    "description": "old-deprecated-class / W1512deprecated-class / W4904",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "old-deprecated-decorator / W1513deprecated-decorator / W4905",
+    "description": "old-deprecated-decorator / W1513deprecated-decorator / W4905",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "old-deprecated-method / W1505deprecated-method / W4902",
+    "description": "old-deprecated-method / W1505deprecated-method / W4902",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "old-deprecated-module / W0402deprecated-module / W4901",
+    "description": "old-deprecated-module / W0402deprecated-module / W4901",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "old-empty-docstring / W0132empty-docstring / C0112",
+    "description": "old-empty-docstring / W0132empty-docstring / C0112",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "old-missing-param-doc / W9003missing-param-doc / W9015",
+    "description": "old-missing-param-doc / W9003missing-param-doc / W9015",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "old-missing-returns-doc / W9007missing-return-doc / W9011",
+    "description": "old-missing-returns-doc / W9007missing-return-doc / W9011",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "old-missing-type-doc / W9004missing-type-doc / W9016",
+    "description": "old-missing-type-doc / W9004missing-type-doc / W9016",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "old-missing-yields-doc / W9009missing-yield-doc / W9013",
+    "description": "old-missing-yields-doc / W9009missing-yield-doc / W9013",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "old-non-iterator-returned-1 / W0234non-iterator-returned / E0301",
+    "description": "old-non-iterator-returned-1 / W0234non-iterator-returned / E0301",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "old-unidiomatic-typecheck / W0154unidiomatic-typecheck / C0123",
+    "description": "old-unidiomatic-typecheck / W0154unidiomatic-typecheck / C0123",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "old-unpacking-non-sequence / W0633unpacking-non-sequence / E0633",
+    "description": "old-unpacking-non-sequence / W0633unpacking-non-sequence / E0633",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "useless-super-delegation / W0235useless-parent-delegation / W0246",
+    "description": "useless-super-delegation / W0235useless-parent-delegation / W0246",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "use-implicit-booleaness-not-comparison / C1803",
+    "description": "use-implicit-booleaness-not-comparison / C1803",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "use-implicit-booleaness-not-comparison-to-string / C1804",
+    "description": "use-implicit-booleaness-not-comparison-to-string / C1804",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "use-implicit-booleaness-not-comparison-to-zero / C1805",
+    "description": "use-implicit-booleaness-not-comparison-to-zero / C1805",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "blacklisted-name / C0102disallowed-name / C0104",
+    "description": "blacklisted-name / C0102disallowed-name / C0104",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "compare-to-empty-string / C1901use-implicit-booleaness-not-comparison-to-string ",
+    "description": "compare-to-empty-string / C1901use-implicit-booleaness-not-comparison-to-string / C1804",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "use-implicit-booleaness-not-comparison-to-string / C1804",
+    "description": "use-implicit-booleaness-not-comparison-to-string / C1804",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "compare-to-zero / C2001use-implicit-booleaness-not-comparison-to-zero / C1805",
+    "description": "compare-to-zero / C2001use-implicit-booleaness-not-comparison-to-zero / C1805",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "use-implicit-booleaness-not-comparison-to-zero / C1805",
+    "description": "use-implicit-booleaness-not-comparison-to-zero / C1805",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "len-as-condition / C1801use-implicit-booleaness-not-len / C1802",
+    "description": "len-as-condition / C1801use-implicit-booleaness-not-len / C1802",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "missing-docstring / C0111missing-module-docstring / C0114missing-class-docstring",
+    "description": "missing-docstring / C0111missing-module-docstring / C0114missing-class-docstring / C0115missing-function-docstring / C0116",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "old-misplaced-comparison-constant / C0122misplaced-comparison-constant / C2201",
+    "description": "old-misplaced-comparison-constant / C0122misplaced-comparison-constant / C2201",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "old-non-ascii-name / C0144non-ascii-name / C2401",
+    "description": "old-non-ascii-name / C0144non-ascii-name / C2401",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "unneeded-not / C0113unnecessary-negation / C0117",
+    "description": "unneeded-not / C0113unnecessary-negation / C0117",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "consider-alternative-union-syntax / R6003",
+    "description": "consider-alternative-union-syntax / R6003",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "consider-refactoring-into-while-condition / R3501",
+    "description": "consider-refactoring-into-while-condition / R3501",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "consider-using-dict-comprehension / R1717",
+    "description": "consider-using-dict-comprehension / R1717",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "consider-using-namedtuple-or-dataclass / R6101",
+    "description": "consider-using-namedtuple-or-dataclass / R6101",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "match-class-positional-attributes / R1906",
+    "description": "match-class-positional-attributes / R1906",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "old-no-self-use / R0201no-self-use / R6301",
+    "description": "old-no-self-use / R0201no-self-use / R6301",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "old-simplifiable-if-statement / R0102simplifiable-if-statement / R1703",
+    "description": "old-simplifiable-if-statement / R0102simplifiable-if-statement / R1703",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "old-too-many-nested-blocks / R0101too-many-nested-blocks / R1702",
+    "description": "old-too-many-nested-blocks / R0101too-many-nested-blocks / R1702",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "deprecated-disable-all / I0014deprecated-pragma / I0022",
+    "description": "deprecated-disable-all / I0014deprecated-pragma / I0022",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "How To GuidesHow to Write a CheckerHow To Write a Pylint PluginTransform plugins",
+    "description": "How To GuidesHow to Write a CheckerHow To Write a Pylint PluginTransform plugins",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "Technical ReferenceStartup and the Linter ClassCheckers",
+    "description": "Technical ReferenceStartup and the Linter ClassCheckers",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "Contributing to pylintContributingTesting pylintContributor installationLaunchin",
+    "description": "Contributing to pylintContributingTesting pylintContributor installationLaunching testsWriting testsProfiling and performance analysisOSS-Fuzz integrationReleasing a pylint versionGovernance",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "Testing pylintContributor installationLaunching testsWriting tests",
+    "description": "Testing pylintContributor installationLaunching testsWriting tests",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "4.xWhat's New in Pylint 4.1What's New in Pylint 4.0",
+    "description": "4.xWhat's New in Pylint 4.1What's New in Pylint 4.0",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "3.xWhat's New in Pylint 3.3What's New in Pylint 3.2What's New in Pylint 3.1What'",
+    "description": "3.xWhat's New in Pylint 3.3What's New in Pylint 3.2What's New in Pylint 3.1What's New in Pylint 3.0",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "2.xWhat's New in Pylint 2.17What's New in Pylint 2.16What's New in Pylint 2.15Wh",
+    "description": "2.xWhat's New in Pylint 2.17What's New in Pylint 2.16What's New in Pylint 2.15What's New in Pylint 2.14Summary -- Release highlightsNew checkersRemoved checkersExtensionsOther ChangesDeprecationsFull changelogWhat's New in Pylint 2.13Summary -- Release highlightsNew checkersRemoved checkersExtensionsOther ChangesFull changelogWhat's New in Pylint 2.12Summary -- Release highlightsNew checkersExtensionsOther ChangesFull changelogWhat's New in Pylint 2.11Summary -- Release highlightsNew checkersRemoved checkersExtensionsOther ChangesFull changelogWhat's New In Pylint 2.10Summary -- Release highlightsNew checkersExtensionsOther ChangesFull changelogWhat's New In Pylint 2.9Summary -- Release highlightsNew checkersOther ChangesFull changelogWhat's New In Pylint 2.8Summary -- Release highlightsBreaking changesNew checkersOther ChangesFull changelogWhat's New In Pylint 2.7Summary -- Release highlightsNew checkersOther ChangesFull changelogWhat's New In Pylint 2.6Summary -- Release highlightsNew checkersOther ChangesFull changelogWhat's New In Pylint 2.5Summary -- Release highlightsNew checkersOther ChangesFull changelogWhat's New In Pylint 2.4Summary -- Release highlightsNew checkersOther ChangesFull changelogWhat's New In Pylint 2.3Summary -- Release highlightsNew checkersOther ChangesFull changelogWhat's New In Pylint 2.2Summary -- Release highlightsNew checkersOther ChangesFull changelogWhat's New In Pylint 2.1Summary -- Release highlightsNew checkersOther ChangesFull changelogWhat's New In Pylint 2.0Summary -- Release highlightsNew checkersOther ChangesFull changelog",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "What's New in Pylint 2.14Summary -- Release highlightsNew checkersRemoved checke",
+    "description": "What's New in Pylint 2.14Summary -- Release highlightsNew checkersRemoved checkersExtensionsOther ChangesDeprecationsFull changelog",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "What's New in Pylint 2.13Summary -- Release highlightsNew checkersRemoved checke",
+    "description": "What's New in Pylint 2.13Summary -- Release highlightsNew checkersRemoved checkersExtensionsOther ChangesFull changelog",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "What's New in Pylint 2.12Summary -- Release highlightsNew checkersExtensionsOthe",
+    "description": "What's New in Pylint 2.12Summary -- Release highlightsNew checkersExtensionsOther ChangesFull changelog",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "What's New in Pylint 2.11Summary -- Release highlightsNew checkersRemoved checke",
+    "description": "What's New in Pylint 2.11Summary -- Release highlightsNew checkersRemoved checkersExtensionsOther ChangesFull changelog",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "What's New In Pylint 2.10Summary -- Release highlightsNew checkersExtensionsOthe",
+    "description": "What's New In Pylint 2.10Summary -- Release highlightsNew checkersExtensionsOther ChangesFull changelog",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "What's New In Pylint 2.9Summary -- Release highlightsNew checkersOther ChangesFu",
+    "description": "What's New In Pylint 2.9Summary -- Release highlightsNew checkersOther ChangesFull changelog",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "What's New In Pylint 2.8Summary -- Release highlightsBreaking changesNew checker",
+    "description": "What's New In Pylint 2.8Summary -- Release highlightsBreaking changesNew checkersOther ChangesFull changelog",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "What's New In Pylint 2.7Summary -- Release highlightsNew checkersOther ChangesFu",
+    "description": "What's New In Pylint 2.7Summary -- Release highlightsNew checkersOther ChangesFull changelog",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "What's New In Pylint 2.6Summary -- Release highlightsNew checkersOther ChangesFu",
+    "description": "What's New In Pylint 2.6Summary -- Release highlightsNew checkersOther ChangesFull changelog",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "What's New In Pylint 2.5Summary -- Release highlightsNew checkersOther ChangesFu",
+    "description": "What's New In Pylint 2.5Summary -- Release highlightsNew checkersOther ChangesFull changelog",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "What's New In Pylint 2.4Summary -- Release highlightsNew checkersOther ChangesFu",
+    "description": "What's New In Pylint 2.4Summary -- Release highlightsNew checkersOther ChangesFull changelog",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "What's New In Pylint 2.3Summary -- Release highlightsNew checkersOther ChangesFu",
+    "description": "What's New In Pylint 2.3Summary -- Release highlightsNew checkersOther ChangesFull changelog",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "What's New In Pylint 2.2Summary -- Release highlightsNew checkersOther ChangesFu",
+    "description": "What's New In Pylint 2.2Summary -- Release highlightsNew checkersOther ChangesFull changelog",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "What's New In Pylint 2.1Summary -- Release highlightsNew checkersOther ChangesFu",
+    "description": "What's New In Pylint 2.1Summary -- Release highlightsNew checkersOther ChangesFull changelog",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "What's New In Pylint 2.0Summary -- Release highlightsNew checkersOther ChangesFu",
+    "description": "What's New In Pylint 2.0Summary -- Release highlightsNew checkersOther ChangesFull changelog",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "1.xWhat's New In Pylint 1.9Summary -- Release highlightsNew checkersOther Change",
+    "description": "1.xWhat's New In Pylint 1.9Summary -- Release highlightsNew checkersOther ChangesFull changelogWhat's New In Pylint 1.8Summary -- Release highlightsNew checkersOther ChangesFull changelogWhat's New In Pylint 1.7Summary -- Release highlightsNew checkersOther ChangesBug fixesRemoved ChangesFull changelogWhat's New In Pylint 1.6Summary -- Release highlightsNew checkersNew featuresBug fixesOther ChangesDeprecated featuresRemoved featuresFull changelogWhat's New In Pylint 1.5What's New In Pylint 1.4What's New In Pylint 1.3What's New In Pylint 1.2What's New In Pylint 1.1What's New In Pylint 1.0",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "What's New In Pylint 1.9Summary -- Release highlightsNew checkersOther ChangesFu",
+    "description": "What's New In Pylint 1.9Summary -- Release highlightsNew checkersOther ChangesFull changelog",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "What's New In Pylint 1.8Summary -- Release highlightsNew checkersOther ChangesFu",
+    "description": "What's New In Pylint 1.8Summary -- Release highlightsNew checkersOther ChangesFull changelog",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "What's New In Pylint 1.7Summary -- Release highlightsNew checkersOther ChangesBu",
+    "description": "What's New In Pylint 1.7Summary -- Release highlightsNew checkersOther ChangesBug fixesRemoved ChangesFull changelog",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "What's New In Pylint 1.6Summary -- Release highlightsNew checkersNew featuresBug",
+    "description": "What's New In Pylint 1.6Summary -- Release highlightsNew checkersNew featuresBug fixesOther ChangesDeprecated featuresRemoved featuresFull changelog",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "0.xWhat's New in Pylint 0.28.0?What's New in Pylint 0.27.0?What's New in Pylint ",
+    "description": "0.xWhat's New in Pylint 0.28.0?What's New in Pylint 0.27.0?What's New in Pylint 0.26.0?What's New in Pylint 0.25.2?What's New in Pylint 0.25.1?What's New in Pylint 0.25.0?What's New in Pylint 0.24.0?What's New in Pylint 0.23.0?What's New in Pylint 0.22.0?What's New in Pylint 0.21.4?What's New in Pylint 0.21.3?What's New in Pylint 0.21.2?What's New in Pylint 0.21.1?What's New in Pylint 0.21.0?What's New in Pylint 0.20.0?What's New in Pylint 0.19.0?What's New in Pylint 0.18.0?What's New in Pylint 0.17.0?What's New in Pylint 0.16.0?What's New in Pylint 0.15.2?What's New in Pylint 0.15.1?What's New in Pylint 0.15.0?What's New in Pylint 0.14.0?What's New in Pylint 0.13.2?What's New in Pylint 0.13.1?What's New in Pylint 0.13.0?What's New in Pylint 0.12.2?What's New in Pylint 0.12.1?What's New in Pylint 0.12.0?What's New in Pylint 0.11.0?What's New in Pylint 0.10.0?What's New in Pylint 0.9.0?What's New in Pylint 0.8.1?What's New in Pylint 0.8.0?What's New in Pylint 0.7.0?What's New in Pylint 0.6.4?What's New in Pylint 0.6.3?What's New in Pylint 0.6.2?What's New in Pylint 0.6.1?What's New in Pylint 0.6.0?What's New in Pylint 0.5.0?What's New in Pylint 0.4.2?What's New in Pylint 0.4.1?What's New in Pylint 0.4.0?What's New in Pylint 0.3.3?What's New in Pylint 0.3.2?What's New in Pylint 0.3.1?What's New in Pylint 0.3.0?What's New in Pylint 0.2.1?What's New in Pylint 0.2.0?What's New in Pylint 0.1.2?What's New in Pylint 0.1.1?What's New in Pylint 0.1?",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "async-context-manager-with-regular-with / E1145",
+    "description": "async-context-manager-with-regular-with / E1145",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "invalid-character-carriage-return / E2511",
+    "description": "invalid-character-carriage-return / E2511",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "invalid-character-zero-width-space / E2515",
+    "description": "invalid-character-zero-width-space / E2515",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "positional-only-arguments-expected / E3102",
+    "description": "positional-only-arguments-expected / E3102",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "unexpected-special-method-signature / E0302",
+    "description": "unexpected-special-method-signature / E0302",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "anomalous-unicode-escape-in-string / W1402",
+    "description": "anomalous-unicode-escape-in-string / W1402",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "contextmanager-generator-missing-cleanup / W0135",
+    "description": "contextmanager-generator-missing-cleanup / W0135",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "duplicate-string-formatting-argument / W1308",
+    "description": "duplicate-string-formatting-argument / W1308",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "format-string-without-interpolation / W1310",
+    "description": "format-string-without-interpolation / W1310",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "isinstance-second-argument-not-valid-type / W1116",
+    "description": "isinstance-second-argument-not-valid-type / W1116",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "kwarg-superseded-by-positional-arg / W1117",
+    "description": "kwarg-superseded-by-positional-arg / W1117",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "missing-parentheses-for-call-in-test / W0126",
+    "description": "missing-parentheses-for-call-in-test / W0126",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "non-str-assignment-to-dunder-name / W1115",
+    "description": "non-str-assignment-to-dunder-name / W1115",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "using-assignment-expression-in-unsupported-version / W2605",
+    "description": "using-assignment-expression-in-unsupported-version / W2605",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "using-exception-groups-in-unsupported-version / W2603",
+    "description": "using-exception-groups-in-unsupported-version / W2603",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "using-f-string-in-unsupported-version / W2601",
+    "description": "using-f-string-in-unsupported-version / W2601",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "using-final-decorator-in-unsupported-version / W2602",
+    "description": "using-final-decorator-in-unsupported-version / W2602",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "using-generic-type-syntax-in-unsupported-version / W2604",
+    "description": "using-generic-type-syntax-in-unsupported-version / W2604",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "using-positional-only-args-in-unsupported-version / W2606",
+    "description": "using-positional-only-args-in-unsupported-version / W2606",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "use-implicit-booleaness-not-comparison / C1803",
+    "description": "use-implicit-booleaness-not-comparison / C1803",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "use-implicit-booleaness-not-comparison-to-string / C1804",
+    "description": "use-implicit-booleaness-not-comparison-to-string / C1804",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "use-implicit-booleaness-not-comparison-to-zero / C1805",
+    "description": "use-implicit-booleaness-not-comparison-to-zero / C1805",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "old-misplaced-comparison-constant / C0122",
+    "description": "old-misplaced-comparison-constant / C0122",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "consider-alternative-union-syntax / R6003",
+    "description": "consider-alternative-union-syntax / R6003",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "consider-refactoring-into-while-condition / R3501",
+    "description": "consider-refactoring-into-while-condition / R3501",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "consider-using-dict-comprehension / R1717",
+    "description": "consider-using-dict-comprehension / R1717",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "consider-using-namedtuple-or-dataclass / R6101",
+    "description": "consider-using-namedtuple-or-dataclass / R6101",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "match-class-positional-attributes / R1906",
+    "description": "match-class-positional-attributes / R1906",
+    "category": "lint"
+  },
+  {
+    "language": "python",
+    "source": "Pylint",
+    "rule": "Messages overviewFatalErrorWarningConventionRefactorInformation",
+    "description": "Messages overviewFatalErrorWarningConventionRefactorInformation",
+    "category": "lint"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "1 Introduction",
+    "description": "This document serves as thecompletedefinition of Google's coding standards for\nsource code in the Java\u2122 Programming Language. A Java source file is described as beingin\nGoogle Styleif and only if it adheres to the rules herein. Like other programming style guides, the issues covered span not only aesthetic issues of\nformatting, but other types of conventions or coding standards as well. However, this document\nfocuses primarily on thehard-and-fast rulesthat we follow universally, and\navoids givingadvicethat isn't clearly enforceable (whether by human or tool).",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "1.1 Terminology notes",
+    "description": "In this document, unless otherwise clarified: Other \"terminology notes\" will appear occasionally throughout the document.",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "1.2 Guide notes",
+    "description": "Example code in this document isnon-normative. That is, while the examples\nare in Google Style, they may not illustrate theonlystylish way to represent the\ncode. Optional formatting choices made in examples should not be enforced as rules.",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "2.1 File name",
+    "description": "For a source file containing classes, the file name consists of the case-sensitive name of the\ntop-level class (of which there isexactly one), plus the.javaextension.",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "2.2 File encoding: UTF-8",
+    "description": "Source files are encoded inUTF-8.",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "2.3 Special characters",
+    "description": "Aside from the line terminator sequence, theASCII horizontal space\ncharacter(0x20) is the only whitespace character that appears\nanywhere in a source file. This implies that: For any character that has aspecial escape sequence(\\b,\\t,\\n,\\f,\\r,\\s,\\\",\\'and\\\\), that sequence\nis used rather than the corresponding octal\n(e.g.\\012) or Unicode\n(e.g.\\u000a) escape. For the remaining non-ASCII characters, either the actual Unicode character\n(e.g.\u221e) or the equivalent Unicode escape\n(e.g.\\u221e) is used. The choice depends only on\nwhich makes the codeeasier to read and understand, although Unicode escapes\noutside string literals and comments are strongly discouraged. Tip:In the Unicode escape case, and ",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "3 Source file structure",
+    "description": "Exactly one blank lineseparates each section that is present. Apackage-info.javafile is the same, but without the class declaration. Amodule-info.javafile does not contain a package declaration and replaces the\nclass declaration with a module declaration, but otherwise follows the same structure.",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "3.1 License or copyright information, if present",
+    "description": "If license or copyright information belongs in a file, it belongs here.",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "3.2 Package declaration",
+    "description": "Every source file must have a package declaration.Compact source filesare not used. (This rule obviously does not apply tomodule-info.javafiles, which have a different syntax that does not include a\npackage declaration.) The package declaration isnot line-wrapped. The column limit (Section 4.4,Column limit: 100) does not apply to package declarations.",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "3.3 Imports",
+    "description": "Wildcard (\"on-demand\") imports, static or otherwise,are not\n  used. Module importsare not used. Example: Imports arenot line-wrapped. The column limit (Section 4.4,Column limit: 100) does not apply to imports. Imports are ordered as follows: If there are both static and non-static imports, a single blank line separates the two\ngroups. There are no other blank lines between imports. Within each group the imported names appear in ASCII sort order. (Note:this is not the same as the importlinesbeing in ASCII sort order, since '.'\nsorts before ';'.) Static import is not used for static nested classes. They are imported with\nnormal imports.",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "3.4 Class declaration",
+    "description": "Each top-level class resides in a source file of its own. The order you choose for the members and initializers of your class can have a great effect on\nlearnability. However, there's no single correct recipe for how to do it; different classes may\norder their contents in different ways. What is important is that each class usessomelogical order, which its\nmaintainer could explain if asked. For example, new methods are not just habitually added to the end\nof the class, as that would yield \"chronological by date added\" ordering, which is not a logical\nordering. Methods of a class that share the same name appear in a single contiguous group with no other\n  members in between. The same applies ",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "3.5 Module declaration",
+    "description": "Module directives are ordered as follows: A single blank line separates each block that is present.",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "4 Formatting",
+    "description": "Terminology Note:block-like constructrefers to\nthe body of a class, method, constructor, or switch. Note that, by Section 4.8.3.1 onarray initializers, any array initializermayoptionally be treated as if it were a block-like construct.",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "4.1 Braces",
+    "description": "Braces are used withif,else,for,doandwhilestatements, even when the\nbody is empty or contains only a single statement. Other optional braces, such as those in a lambda expression, remain optional. Braces follow the Kernighan and Ritchie style fornonemptyblocks and block-like\n  constructs: Exception: In places where these rules allow a single statement ending with a semicolon\n(;), a block of statements can appear, and the opening\nbrace of this block is preceded by a line break. Blocks like these are typically introduced to\nlimit the scope of local variables. Examples: A few exceptions for enum classes are given in Section 4.8.1,Enum classes. An empty block or block-like construct may be in K ",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "4.2 Block indentation: +2 spaces",
+    "description": "Each time a new block or block-like construct is opened, the indent increases by two\nspaces. When the block ends, the indent returns to the previous indent level. The indent level\napplies to both code and comments throughout the block. (See the example in Section 4.1.2,Nonempty blocks: K & R Style.)",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "4.3 One statement per line",
+    "description": "Each statement is followed by a line break.",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "4.4 Column limit: 100",
+    "description": "Java code has a column limit of 100 characters. A \"character\" means any Unicode code point.\nExcept as noted below, any line that would exceed this limit must be line-wrapped, as explained in\nSection 4.5,Line-wrapping. Each Unicode code point counts as one character, even if its display width is\ngreater or less. For example, if usingfullwidth characters,\nyou may choose to wrap the line earlier than where this rule strictly requires. Exceptions:",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "4.5 Line-wrapping",
+    "description": "Terminology Note:When code that might otherwise\noccupy a single line is divided into multiple lines, this activity is calledline-wrapping. There is no comprehensive, deterministic formula showingexactlyhow to line-wrap in\nevery situation. Very often there are several valid ways to line-wrap the same piece of code. Note:While the typical reason for line-wrapping is to avoid\noverflowing the column limit, even code that would in fact fit within the column limitmaybe line-wrapped at the author's discretion. Tip:Extracting a method or local variable may solve the problem\nwithout the need to line-wrap. The prime directive of line-wrapping is: prefer to break at ahigher syntactic level. Also: Note:",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "4.6 Whitespace",
+    "description": "A single blank line always appears: A single blank line may also appear anywhere it improves readability, for example between\nstatements to organize the code into logical subsections. A blank line before the first member or\ninitializer, or after the last member or initializer of the class, is neither encouraged nor\ndiscouraged. Multipleconsecutive blank lines are permitted, but never required (or encouraged). Beyond where required by the language or other style rules, and apart from within literals,\ncomments and Javadoc, a single ASCII space also appears in the following placesonly. This rule is never interpreted as requiring or forbidding additional space at the start or\nend of a line; it a",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "4.7 Grouping parentheses: recommended",
+    "description": "Optional grouping parentheses are omitted only when author and reviewer agree that there is no\nreasonable chance the code will be misinterpreted without them, nor would they have made the code\neasier to read. It isnotreasonable to assume that every reader has the entire Java\noperator precedence table memorized.",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "4.8 Specific constructs",
+    "description": "After the comma that follows an enum constant, a line break is optional. Additional blank\nlines (usually just one) are also allowed. This is one possibility: An enum class with no methods and no documentation on its constants may optionally be formatted\nas if it were an array initializer (see Section 4.8.3.1 onarray initializers). Since enum classesare classes, all other rules for formatting classes apply. Every variable declaration (field or local) declares only one variable: declarations such asint a, b;are not used. Exception:Multiple variable declarations are acceptable in the header of aforloop. Local variables arenothabitually declared at the start of their containing\nblock or block-li",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "5.1 Rules common to all identifiers",
+    "description": "Identifiers use only ASCII letters and digits, and, in a small number of cases noted below,\nunderscores. Thus each valid identifier name is matched by the regular expression\\w+. In Google Style, special prefixes or suffixes arenotused. For example, these\nnames are not Google Style:name_,mName,s_nameandkName.",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "5.2 Rules by identifier type",
+    "description": "Package and module names use only lowercase letters and digits (no underscores). Consecutive\nwords are simply concatenated together. For example,com.example.deepspace, notcom.example.deepSpaceorcom.example.deep_space. Class names are written inUpperCamelCase. Class names are typically nouns or noun phrases. For example,CharacterorImmutableList. Interface names may also be nouns or\nnoun phrases (for example,List), but may sometimes be\nadjectives or adjective phrases instead (for example,Readable). There are no specific rules or even well-established conventions for naming annotation types. Atestclass has a name that ends withTest,\nfor example,HashIntegrationTest.\nIf it covers a single class, ",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "5.3 Camel case: defined",
+    "description": "Sometimes there is more than one reasonable way to convert an English phrase into camel case,\nsuch as when acronyms or unusual constructs like \"IPv6\" or \"iOS\" are present. To improve\npredictability, Google Style specifies the following (nearly) deterministic scheme. Beginning with the prose form of the name: In very rare circumstances (for example, multipart version numbers), you may need to use\nunderscores to separate adjacent numbers, since numbers do not have upper and lower case variants. Examples: *Acceptable, but not recommended. Note:Some words are ambiguously hyphenated in the English\nlanguage: for example \"nonempty\" and \"non-empty\" are both correct, so the method namescheckNonemptya",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "6.1@Override: always used",
+    "description": "A method is marked with the@Overrideannotation\nwhenever it is legal.  This includes a class method overriding a superclass method, a class method\nimplementing an interface method, an interface method respecifying a superinterface method, and an\nexplicitly declared accessor method for a record component. Exception:@Overridemay be omitted when the parent method is@Deprecated.",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "6.2 Caught exceptions: not ignored",
+    "description": "It is very rarely correct to do nothing in response to a caught\nexception. (Typical responses are to log it, or if it is considered \"impossible\", rethrow it as anAssertionError.) When it truly is appropriate to take no action whatsoever in a catch block, the reason this is\njustified is explained in a comment.",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "6.3 Static members: qualified using class",
+    "description": "When a reference to a static class member must be qualified, it is qualified with that class's\nname, not with a reference or expression of that class's type.",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "6.4 Finalizers: not used",
+    "description": "Do not overrideObject.finalize. Finalization support\nisscheduled for removal.",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "7.1 Formatting",
+    "description": "Thebasicformatting of Javadoc blocks is as seen in this example: ... or in this single-line example: The basic form is always acceptable. The single-line form may be substituted when the entirety\nof the Javadoc block (including comment markers) can fit on a single line. Note that this only\napplies when there are no block tags such as@param. One blank line\u2014that is, a line containing only the aligned leading asterisk\n(*)\u2014appears between paragraphs, and before the group of block tags if present.\nEach paragraph except the first has<p>immediately before the first word, with\nno space after it. HTML tags for other block-level elements, such as<ul>or<table>, arenotpreceded with<p>. Any of the standa",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "7.2 The summary fragment",
+    "description": "Each Javadoc block begins with a briefsummary fragment. This\nfragment is very important: it is the only part of the text that appears in certain contexts such as\nclass and method indexes. This is a fragment\u2014a noun phrase or verb phrase, not a complete sentence. It doesnotbegin withA {@code Foo} is a..., orThis method returns..., nor does it form a complete imperative sentence\nlikeSave the record.. However, the fragment is capitalized and\npunctuated as if it were a complete sentence. Tip:A common mistake is to write simple Javadoc in the form/** @return the customer ID */. This is\nincorrect, and should be changed to/** Returns the customer ID. */or/** {@return the customer ID} */.",
+    "category": "style"
+  },
+  {
+    "language": "java",
+    "source": "Google Java Style",
+    "rule": "7.3 Where Javadoc is used",
+    "description": "At theminimum, Javadoc is present for everyvisibleclass, member, or record\ncomponent, with a few exceptions noted below. A top-level class is visible if it ispublic; a member is visible if it ispublicorprotectedand its containing\nclass is visible; and a record component is visible if its containing record is visible. Additional Javadoc content may also be present, as explained in Section 7.3.4,Non-required Javadoc. Javadoc is optional for \"simple, obvious\" members and record components, such as agetFoo()method,iftherereally and\ntrulyis nothing else worthwhile to say but \"the foo\". Important:it is not appropriate to cite this exception to justify\nomitting relevant information that a typical r",
+    "category": "style"
+  },
+  {
+    "language": "general",
+    "source": "CleanCode",
+    "rule": "Functions should do one thing",
+    "description": "Functions should do one thing",
+    "category": "best_practice"
+  },
+  {
+    "language": "general",
+    "source": "CleanCode",
+    "rule": "Avoid deep nesting",
+    "description": "Avoid deep nesting",
+    "category": "best_practice"
+  },
+  {
+    "language": "general",
+    "source": "CleanCode",
+    "rule": "Use meaningful variable names",
+    "description": "Use meaningful variable names",
+    "category": "best_practice"
+  },
+  {
+    "language": "general",
+    "source": "CleanCode",
+    "rule": "Keep functions small",
+    "description": "Keep functions small",
+    "category": "best_practice"
+  },
+  {
+    "language": "general",
+    "source": "CleanCode",
+    "rule": "Avoid global variables",
+    "description": "Avoid global variables",
+    "category": "best_practice"
+  },
+  {
+    "language": "general",
+    "source": "CleanCode",
+    "rule": "Write readable code over clever code",
+    "description": "Write readable code over clever code",
+    "category": "best_practice"
+  }
+]

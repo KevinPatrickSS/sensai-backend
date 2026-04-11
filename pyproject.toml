@@ -31,10 +31,6 @@ dependencies = [
     "pyasn1-modules==0.4.1",
     "apscheduler==3.11.0",
     "httptools==0.6.4",
-<<<<<<< Updated upstream
-    "uvloop==0.21.0; sys_platform != 'win32'",
-=======
->>>>>>> Stashed changes
     "watchfiles==1.0.5",
     "websockets==15.0.1",
     "python-multipart==0.0.20",
@@ -44,6 +40,9 @@ dependencies = [
     "langfuse==3.5.1",
     "jiter==0.8.2",
     "instructor==1.11.3",
+    "langgraph>=0.5.4",
+    "radon>=6.0.1",
+    "faiss-cpu>=1.13.2",
 ]
 
 [build-system]

@@ -1,7 +1,7 @@
 import os
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import StreamingResponse
-from typing import AsyncGenerator, Optional, Dict
+from typing import AsyncGenerator, Optional, Dict, List
 import json
 from copy import deepcopy
 from pydantic import BaseModel, Field, create_model
@@ -11,6 +11,7 @@ from api.models import (
     ChatResponseType,
     TaskType,
     QuestionType,
+    CodeEvaluateRequest,
 )
 from api.llm import (
     run_llm_with_openai,
@@ -35,18 +36,26 @@ from api.utils.s3 import (
 from api.utils.audio import prepare_audio_input_for_ai
 from api.utils.file_analysis import extract_submission_file
 from api.db.user import get_user_first_name
-from langfuse import get_client, observe
-from api.prompts import compile_prompt
-from api.prompts.router import ROUTER_SYSTEM_PROMPT, ROUTER_USER_PROMPT
-from api.prompts.rewrite_query import REWRITE_QUERY_SYSTEM_PROMPT, REWRITE_QUERY_USER_PROMPT
-from api.prompts.objective_question import OBJECTIVE_QUESTION_SYSTEM_PROMPT, OBJECTIVE_QUESTION_USER_PROMPT
-from api.prompts.subjective_question import SUBJECTIVE_QUESTION_SYSTEM_PROMPT, SUBJECTIVE_QUESTION_USER_PROMPT
-from api.prompts.doubt_solving import DOUBT_SOLVING_SYSTEM_PROMPT, DOUBT_SOLVING_USER_PROMPT
-from api.prompts.assignment import ASSIGNMENT_SYSTEM_PROMPT, ASSIGNMENT_USER_PROMPT
+
+try:
+    from langfuse import get_client, observe
+    langfuse = get_client()
+    _langfuse_available = True
+except Exception:
+    # Langfuse is not configured — define no-op stubs so the rest of the
+    # module loads and the /ai/code-evaluate endpoint works without it.
+    langfuse = None
+    _langfuse_available = False
+
+    def observe(name=None, **kwargs):
+        """No-op decorator when Langfuse is not available."""
+        def decorator(fn):
+            return fn
+        return decorator
 
 router = APIRouter()
 
-langfuse = get_client()
+LANGFUSE_PROMPT_LABEL = getattr(settings, "langfuse_tracing_environment", None) or "development"
 
 
 def convert_chat_history_to_prompt(chat_history: list[dict]) -> str:
@@ -136,9 +145,11 @@ async def rewrite_query(
     is_root_trace: bool = False,
 ):
     # rewrite query
-    messages = compile_prompt(
-        REWRITE_QUERY_SYSTEM_PROMPT,
-        REWRITE_QUERY_USER_PROMPT,
+    prompt = langfuse.get_prompt(
+        "rewrite-query", type="chat", label=LANGFUSE_PROMPT_LABEL
+    )
+
+    messages = prompt.compile(
         chat_history=convert_chat_history_to_prompt(chat_history),
         reference_material=question_details,
     )
@@ -157,6 +168,7 @@ async def rewrite_query(
         messages=messages,
         response_model=Output,
         max_output_tokens=8192,
+        langfuse_prompt=prompt,
     )
 
     llm_input = f"# Chat History\n\n{convert_chat_history_to_prompt(chat_history)}\n\n# Reference Material\n\n{question_details}"
@@ -171,7 +183,8 @@ async def rewrite_query(
         input=llm_input,
         output=output,
         metadata={
-            "prompt_name": "rewrite-query",
+            "prompt_version": prompt.version,
+            "prompt_name": prompt.name,
             "input": llm_input,
             "output": output,
         },
@@ -200,9 +213,9 @@ async def get_model_for_task(
             description="Whether to use a reasoning model to evaluate the student's response"
         )
 
-    messages = compile_prompt(
-        ROUTER_SYSTEM_PROMPT,
-        ROUTER_USER_PROMPT,
+    prompt = langfuse.get_prompt("router", type="chat", label=LANGFUSE_PROMPT_LABEL)
+
+    messages = prompt.compile(
         task_details=question_details,
     )
 
@@ -213,6 +226,7 @@ async def get_model_for_task(
         messages=messages,
         response_model=Output,
         max_output_tokens=4096,
+        langfuse_prompt=prompt,
     )
 
     use_reasoning_model = router_output.use_reasoning_model
@@ -233,7 +247,8 @@ async def get_model_for_task(
         input=llm_input,
         output=use_reasoning_model,
         metadata={
-            "prompt_name": "router",
+            "prompt_version": prompt.version,
+            "prompt_name": prompt.name,
             "input": llm_input,
             "output": use_reasoning_model,
         },
@@ -636,25 +651,21 @@ async def ai_response_for_question(request: AIChatRequest):
 
                 if question["type"] == QuestionType.OBJECTIVE:
                     prompt_name = "objective-question"
-                    messages = compile_prompt(
-                        OBJECTIVE_QUESTION_SYSTEM_PROMPT,
-                        OBJECTIVE_QUESTION_USER_PROMPT,
-                        task_details=question_details,
-                        user_details=user_details,
-                    )
                 else:
                     prompt_name = "subjective-question"
-                    messages = compile_prompt(
-                        SUBJECTIVE_QUESTION_SYSTEM_PROMPT,
-                        SUBJECTIVE_QUESTION_USER_PROMPT,
-                        task_details=question_details,
-                        user_details=user_details,
-                    )
+
+                prompt = langfuse.get_prompt(
+                    prompt_name, type="chat", label=LANGFUSE_PROMPT_LABEL
+                )
+                messages = prompt.compile(
+                    task_details=question_details,
+                    user_details=user_details,
+                )
             else:
-                prompt_name = "doubt_solving"
-                messages = compile_prompt(
-                    DOUBT_SOLVING_SYSTEM_PROMPT,
-                    DOUBT_SOLVING_USER_PROMPT,
+                prompt = langfuse.get_prompt(
+                    "doubt_solving", type="chat", label=LANGFUSE_PROMPT_LABEL
+                )
+                messages = prompt.compile(
                     reference_material=question_details,
                     user_details=user_details,
                 )
@@ -662,7 +673,7 @@ async def ai_response_for_question(request: AIChatRequest):
             messages += chat_history
 
             with langfuse.start_as_current_observation(
-                as_type="generation", name="response"
+                as_type="generation", name="response", prompt=prompt
             ) as observation:
                 try:
                     async for chunk in stream_llm_with_openai(
@@ -687,8 +698,10 @@ async def ai_response_for_question(request: AIChatRequest):
                     observation.update(
                         input=llm_input,
                         output=llm_output,
+                        prompt=prompt,
                         metadata={
-                            "prompt_name": prompt_name,
+                            "prompt_version": prompt.version,
+                            "prompt_name": prompt.name,
                             **response_metadata,
                         },
                     )
@@ -933,9 +946,12 @@ async def ai_response_for_assignment(request: AIChatRequest):
                     description="Assignment score assigned when evaluating initial file submission"
                 )
 
-            messages = compile_prompt(
-                ASSIGNMENT_SYSTEM_PROMPT,
-                ASSIGNMENT_USER_PROMPT,
+            # Get Langfuse prompt for assignment evaluation
+            prompt = langfuse.get_prompt(
+                "assignment", type="chat", label=LANGFUSE_PROMPT_LABEL
+            )
+
+            messages = prompt.compile(
                 assignment_details=assignment_details,
                 user_details=user_details,
             )
@@ -959,8 +975,9 @@ async def ai_response_for_assignment(request: AIChatRequest):
                 else Output
             )
 
+            # Process streaming response with Langfuse observation
             with langfuse.start_as_current_observation(
-                as_type="generation", name="response"
+                as_type="generation", name="response", prompt=prompt
             ) as observation:
                 try:
                     async for chunk in stream_llm_with_openai(
@@ -985,8 +1002,10 @@ async def ai_response_for_assignment(request: AIChatRequest):
                     observation.update(
                         input=llm_input,
                         output=llm_output,
+                        prompt=prompt,
                         metadata={
-                            "prompt_name": "assignment",
+                            "prompt_version": prompt.version,
+                            "prompt_name": prompt.name,
                             **response_metadata,
                         },
                     )
@@ -1006,3 +1025,139 @@ async def ai_response_for_assignment(request: AIChatRequest):
         stream_response(),
         media_type="application/x-ndjson",
     )
+
+
+# ---------------------------------------------------------------------------
+# Code evaluation endpoint
+# ---------------------------------------------------------------------------
+
+COMPLEXITY_GUIDE = """
+Time complexity classes (best → worst):
+O(1) constant · O(log n) logarithmic · O(n) linear · O(n log n) linearithmic
+O(n²) quadratic · O(n³) cubic · O(2ⁿ) exponential · O(n!) factorial
+
+Space complexity = extra memory beyond the input.
+Prefer sorting-based approaches (O(n log n) time, O(1) extra space) over
+hash-set/dict approaches (O(n) time, O(n) space) when both are correct —
+unless the time saving clearly matters for the given constraints.
+"""
+
+
+@router.post("/code-evaluate")
+async def evaluate_code(request: CodeEvaluateRequest):
+    """
+    Evaluate a learner's code submission against a reference solution.
+    Streams back a JSON object with:
+      - is_correct: bool
+      - correctness_score: 0-100
+      - correctness_feedback: what works / what doesn't
+      - approach_comparison: how their approach differs from the reference
+      - time_complexity: { user, reference, verdict, explanation }
+      - space_complexity: { user, reference, verdict, explanation }
+      - complexity_feedback: personalised narrative
+      - code_quality: { score 0-10, issues: [str], suggestions: [str] }
+      - personalized_summary: encouraging closing paragraph
+    """
+
+    async def stream_response() -> AsyncGenerator[str, None]:
+        user_details = ""
+        if request.user_id:
+            user_details = await get_user_details_for_prompt(str(request.user_id))
+
+        stdin_section = (
+            f"\n\nSample stdin used during testing:\n```\n{request.stdin}\n```"
+            if request.stdin
+            else ""
+        )
+
+        prompt_text = f"""You are an expert programming instructor evaluating a learner's code submission.
+
+<Problem Statement>
+{request.problem_statement}
+</Problem Statement>
+
+<Reference Solution ({request.language})>
+```{request.language}
+{request.reference_solution}
+```
+</Reference Solution>
+
+<Learner's Submission ({request.language})>
+```{request.language}
+{request.user_code}
+```
+</Learner's Submission>{stdin_section}
+
+{COMPLEXITY_GUIDE}
+
+Evaluate the learner's code deeply and respond ONLY with a JSON object matching this exact schema — no markdown fences, no preamble:
+
+{{
+  "is_correct": <true if the code produces correct output for all reasonable inputs>,
+  "correctness_score": <integer 0-100>,
+  "correctness_feedback": {{
+    "what_works": "<specific things the learner did right>",
+    "what_doesnt": "<specific bugs, edge cases missed, or logic errors — empty string if fully correct>"
+  }},
+  "approach_comparison": "<1-2 sentences comparing their algorithm/strategy to the reference — highlight differences in approach, not just syntax>",
+  "time_complexity": {{
+    "user": "<Big-O of their code, e.g. O(n log n)>",
+    "reference": "<Big-O of reference solution>",
+    "verdict": "better" | "same" | "worse",
+    "explanation": "<why, with reference to the key operations — e.g. the sort vs the set lookup>"
+  }},
+  "space_complexity": {{
+    "user": "<Big-O extra space>",
+    "reference": "<Big-O extra space>",
+    "verdict": "better" | "same" | "worse",
+    "explanation": "<why>"
+  }},
+  "complexity_feedback": "<personalised 2-3 sentence narrative on their complexity trade-offs; mention if O(n) time with O(n) space vs O(n log n) with O(1) space matters for the given constraints>",
+  "code_quality": {{
+    "score": <integer 0-10>,
+    "issues": ["<specific issue>"],
+    "suggestions": ["<actionable suggestion>"]
+  }},
+  "personalized_summary": "<2-3 sentence encouraging but honest closing paragraph{'; address the learner by name' if user_details else ''} — be specific about what they should focus on next>"
+}}"""
+
+        messages = [{"role": "user", "content": prompt_text}]
+
+        model = openai_plan_to_model_name["text"]
+
+        class TimeSpaceComplexity(BaseModel):
+            user: str
+            reference: str
+            verdict: str  # "better" | "same" | "worse"
+            explanation: str
+
+        class CorrectnessDetail(BaseModel):
+            what_works: str
+            what_doesnt: str
+
+        class CodeQuality(BaseModel):
+            score: int
+            issues: List[str]
+            suggestions: List[str]
+
+        class CodeEvalOutput(BaseModel):
+            is_correct: bool
+            correctness_score: int
+            correctness_feedback: CorrectnessDetail
+            approach_comparison: str
+            time_complexity: TimeSpaceComplexity
+            space_complexity: TimeSpaceComplexity
+            complexity_feedback: str
+            code_quality: CodeQuality
+            personalized_summary: str
+
+        async for chunk in stream_llm_with_openai(
+            model=model,
+            messages=messages,
+            response_model=CodeEvalOutput,
+            max_output_tokens=2048,
+            api_mode="responses",
+        ):
+            yield json.dumps(chunk.model_dump()) + "\n"
+
+    return StreamingResponse(stream_response(), media_type="application/x-ndjson")

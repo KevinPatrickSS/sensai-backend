@@ -26,12 +26,8 @@ from api.routes import (
     ai,
     scorecard,
     integration,
+    evalgraph,
 )
-
-# from api.routes.ai import (
-#     resume_pending_task_generation_jobs,
-#     resume_pending_course_structure_generation_jobs,
-# )
 from api.websockets import router as websocket_router
 from api.scheduler import scheduler
 from api.settings import settings
@@ -40,20 +36,10 @@ import sentry_sdk
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Initialize comprehensive logging as the very first step
     logger.info("Starting application")
-
     scheduler.start()
-
-    # Create the uploads directory if it doesn't exist
     os.makedirs(settings.local_upload_folder, exist_ok=True)
-
-    # Add recovery logic for interrupted tasks
-    # asyncio.create_task(resume_pending_task_generation_jobs())
-    # asyncio.create_task(resume_pending_course_structure_generation_jobs())
-
     yield
-
     logger.info("Shutting down application")
     scheduler.shutdown()
 
@@ -70,22 +56,16 @@ if settings.sentry_dsn:
 app = FastAPI(lifespan=lifespan)
 
 
-# Add request logging middleware
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
-    # Log the incoming request
     logging.info(
         f"Incoming request: {request.method} {request.url.path} "
         f"from {request.client.host if request.client else 'unknown'}"
     )
-
-    # Process the request
     start_time = asyncio.get_event_loop().time()
     try:
         response = await call_next(request)
         process_time = asyncio.get_event_loop().time() - start_time
-
-        # Log the response
         logging.info(
             f"Request completed: {request.method} {request.url.path} "
             f"- Status: {response.status_code} - Duration: {process_time:.4f}s"
@@ -101,16 +81,14 @@ async def log_requests(request: Request, call_next):
         raise
 
 
-# Add CORS middleware to allow cross-origin requests (for frontend to access backend)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Replace with your frontend URL in production
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Mount the uploads folder as a static directory
 if exists(settings.local_upload_folder):
     app.mount(
         f"/{UPLOAD_FOLDER_NAME}",
@@ -118,22 +96,23 @@ if exists(settings.local_upload_folder):
         name="uploads",
     )
 
-app.include_router(file.router, prefix="/file", tags=["file"])
-app.include_router(ai.router, prefix="/ai", tags=["ai"])
-app.include_router(auth.router, prefix="/auth", tags=["auth"])
-app.include_router(batch.router, prefix="/batches", tags=["batches"])
-app.include_router(task.router, prefix="/tasks", tags=["tasks"])
-app.include_router(chat.router, prefix="/chat", tags=["chat"])
-app.include_router(user.router, prefix="/users", tags=["users"])
-app.include_router(org.router, prefix="/organizations", tags=["organizations"])
-app.include_router(cohort.router, prefix="/cohorts", tags=["cohorts"])
-app.include_router(course.router, prefix="/courses", tags=["courses"])
-app.include_router(milestone.router, prefix="/milestones", tags=["milestones"])
-app.include_router(scorecard.router, prefix="/scorecards", tags=["scorecards"])
-app.include_router(code.router, prefix="/code", tags=["code"])
-app.include_router(hva.router, prefix="/hva", tags=["hva"])
-app.include_router(websocket_router, prefix="/ws", tags=["websockets"])
-app.include_router(integration.router, prefix="/integrations", tags=["integrations"])
+app.include_router(file.router,           prefix="/file",           tags=["file"])
+app.include_router(ai.router,             prefix="/ai",             tags=["ai"])
+app.include_router(auth.router,           prefix="/auth",           tags=["auth"])
+app.include_router(batch.router,          prefix="/batches",        tags=["batches"])
+app.include_router(task.router,           prefix="/tasks",          tags=["tasks"])
+app.include_router(chat.router,           prefix="/chat",           tags=["chat"])
+app.include_router(user.router,           prefix="/users",          tags=["users"])
+app.include_router(org.router,            prefix="/organizations",  tags=["organizations"])
+app.include_router(cohort.router,         prefix="/cohorts",        tags=["cohorts"])
+app.include_router(course.router,         prefix="/courses",        tags=["courses"])
+app.include_router(milestone.router,      prefix="/milestones",     tags=["milestones"])
+app.include_router(scorecard.router,      prefix="/scorecards",     tags=["scorecards"])
+app.include_router(code.router,           prefix="/code",           tags=["code"])
+app.include_router(hva.router,            prefix="/hva",            tags=["hva"])
+app.include_router(websocket_router,      prefix="/ws",             tags=["websockets"])
+app.include_router(integration.router,    prefix="/integrations",   tags=["integrations"])
+app.include_router(evalgraph.router,      prefix="/api/evalgraph",  tags=["evalgraph"])
 
 
 @app.exception_handler(Exception)
