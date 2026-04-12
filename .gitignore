@@ -1,6 +1,7 @@
 __pycache__
 *.pyc
-.DS_Store
+.DS_Stores 
+src/api/services/evalgraph/memories.db
 wandb
 logs
 venv
